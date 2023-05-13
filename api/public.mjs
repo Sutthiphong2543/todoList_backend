@@ -18,7 +18,20 @@ publicapi.get('/info/:id', (req, res) => {
 
 publicapi.post('/add', (req, res) => {
     const data = req.body;
-    data.id = Math.floor(Math.random(0) * 1000);
+    
+    const generatedIds = [];
+
+    function generateUniqueId() {
+    let newId;
+    do {
+        newId = Math.floor(Math.random() * 1000);
+    } while (generatedIds.includes(newId));
+    generatedIds.push(newId);
+    return newId;
+    }
+
+    data.id = generateUniqueId();
+
 
     const todo = [...todo_list];
     todo.push(data);
